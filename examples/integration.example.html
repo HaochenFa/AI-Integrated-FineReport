@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI集成帆软报表示例</title>
+    <style>
+      body {
+        font-family: "Microsoft YaHei", Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+      }
+
+      .report-container {
+        margin-top: 20px;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 4px;
+        min-height: 400px;
+      }
+
+      .control-panel {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+      }
+
+      .button-group {
+        margin-top: 15px;
+      }
+
+      button {
+        padding: 8px 15px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .primary-button {
+        background-color: #1976d2;
+        color: white;
+      }
+
+      .secondary-button {
+        background-color: #f57c00;
+        color: white;
+      }
+
+      .custom-options {
+        margin-top: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        display: none;
+      }
+
+      .checkbox-group {
+        margin-bottom: 10px;
+      }
+
+      .checkbox-group label {
+        margin-right: 15px;
+        cursor: pointer;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .ai-analysis-container {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+      }
+
+      .ai-analysis-container h3 {
+        margin-top: 0;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+      }
+
+      .ai-analysis-summary,
+      .ai-analysis-trends,
+      .ai-analysis-insights,
+      .ai-analysis-recommendations {
+        margin-bottom: 15px;
+      }
+
+      .ai-analysis-timestamp {
+        font-size: 12px;
+        color: #777;
+        text-align: right;
+      }
+
+      #ai-analysis-loading {
+        display: none;
+        text-align: center;
+        padding: 20px;
+      }
+
+      #ai-analysis-message {
+        display: none;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 4px;
+      }
+
+      .ai-message-box.error {
+        background-color: #ffebee;
+        color: #d32f2f;
+      }
+
+      .ai-message-box.success {
+        background-color: #e8f5e9;
+        color: #388e3c;
+      }
+
+      .ai-message-box.warning {
+        background-color: #fff8e1;
+        color: #f57c00;
+      }
+
+      .ai-message-box.info {
+        background-color: #e3f2fd;
+        color: #1976d2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>AI集成帆软报表示例</h1>
+
+      <!-- 报表容器 -->
+      <div class="report-container">
+        <!-- 这里将嵌入帆软报表 -->
+        <p>帆软报表将显示在此处</p>
+      </div>
+
+      <!-- 控制面板 -->
+      <div class="control-panel">
+        <h2>AI分析控制面板</h2>
+
+        <div class="button-group">
+          <button id="ai-analysis-button" class="primary-button">执行AI分析</button>
+          <button id="ai-custom-analysis-toggle" class="secondary-button">自定义分析选项</button>
+        </div>
+
+        <!-- 自定义分析选项 -->
+        <div id="custom-analysis-options" class="custom-options">
+          <h3>自定义分析选项</h3>
+
+          <div class="checkbox-group">
+            <p>重点关注领域：</p>
+            <label>
+              <input type="checkbox" class="focus-area-checkbox" value="销售趋势" /> 销售趋势
+            </label>
+            <label>
+              <input type="checkbox" class="focus-area-checkbox" value="区域对比" /> 区域对比
+            </label>
+            <label>
+              <input type="checkbox" class="focus-area-checkbox" value="产品性能" /> 产品性能
+            </label>
+            <label>
+              <input type="checkbox" class="focus-area-checkbox" value="异常检测" /> 异常检测
+            </label>
+          </div>
+
+          <div>
+            <p>额外上下文信息：</p>
+            <textarea
+              id="additional-context-input"
+              placeholder="请输入额外的上下文信息，如业务背景、特殊要求等..."
+            ></textarea>
+          </div>
+
+          <div class="button-group" style="margin-top: 15px">
+            <button id="ai-custom-analysis-button" class="primary-button">执行自定义分析</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 加载指示器 -->
+      <div id="ai-analysis-loading">
+        <p>AI分析中，请稍候...</p>
+        <div class="loading-spinner"></div>
+      </div>
+
+      <!-- 消息框 -->
+      <div id="ai-analysis-message" class="ai-message-box">
+        <span id="ai-analysis-message-text"></span>
+      </div>
+
+      <!-- AI分析结果容器 -->
+      <div id="ai-analysis-result" class="ai-analysis-container" style="display: none">
+        <!-- AI分析结果将显示在此处 -->
+      </div>
+    </div>
+
+    <!-- 引入框架 -->
+    <script type="module">
+      import { init, runBasicAnalysis, runCustomAnalysis } from "../src/main.js";
+
+      // 初始化框架
+      init({
+        api: {
+          url: "http://internal-vllm-service.company.com/v1/chat/completions",
+          apiKey: "YOUR_API_KEY",
+          model: "deepseek-coder",
+          systemPrompt:
+            "你是一个专业的数据分析助手，擅长分析报表数据并提供洞察。请基于提供的数据进行分析，并给出关键发现和建议。",
+          temperature: 0.3,
+          maxTokens: 2000,
+        },
+      });
+
+      // 设置按钮事件
+      document.addEventListener("DOMContentLoaded", function () {
+        // 基础分析按钮
+        const analysisButton = document.getElementById("ai-analysis-button");
+        analysisButton.addEventListener("click", async function () {
+          const resultContainer = document.getElementById("ai-analysis-result");
+          resultContainer.style.display = "none";
+
+          const success = await runBasicAnalysis();
+          if (success) {
+            resultContainer.style.display = "block";
+          }
+        });
+
+        // 自定义分析选项切换
+        const customToggleButton = document.getElementById("ai-custom-analysis-toggle");
+        const customOptions = document.getElementById("custom-analysis-options");
+        customToggleButton.addEventListener("click", function () {
+          if (customOptions.style.display === "block") {
+            customOptions.style.display = "none";
+          } else {
+            customOptions.style.display = "block";
+          }
+        });
+
+        // 自定义分析按钮
+        const customAnalysisButton = document.getElementById("ai-custom-analysis-button");
+        customAnalysisButton.addEventListener("click", async function () {
+          const resultContainer = document.getElementById("ai-analysis-result");
+          resultContainer.style.display = "none";
+
+          // 获取自定义选项
+          const focusAreas = [];
+          const focusCheckboxes = document.querySelectorAll(".focus-area-checkbox:checked");
+          focusCheckboxes.forEach((checkbox) => {
+            focusAreas.push(checkbox.value);
+          });
+
+          const additionalContext =
+            document.getElementById("additional-context-input")?.value || "";
+
+          const success = await runCustomAnalysis({
+            focusAreas,
+            additionalContext,
+          });
+
+          if (success) {
+            resultContainer.style.display = "block";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

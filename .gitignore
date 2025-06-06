@@ -1,0 +1,47 @@
+# 依赖目录
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# 构建输出
+dist/
+build/
+
+# 环境变量和敏感信息
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 编辑器和IDE文件
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# 日志文件
+logs/
+*.log
+
+# 文档文件
+docs/
+
+# 测试覆盖率报告
+coverage/
+
+# 临时文件
+tmp/
+temp/
+
+# 本地配置文件（可能包含敏感信息）
+src/config/api-config.js
+src/config/prompt.js
+
+# API密钥和证书（敏感信息）
+*.pem
+*.key
+*.cert
