@@ -22,32 +22,32 @@
 
 ```plaintext
 /AIDA_Watchboard/
-├── src/                           # 源代码目录
-│   ├── core/                      # 核心功能模块
-│   │   ├── ai-analyzer.js         # AI分析模块
-│   │   ├── data-collector.js      # 数据收集模块
-│   │   ├── prompt-builder.js      # Prompt构建模块
-│   │   └── result-processor.js    # 结果处理模块
-│   ├── config/                    # 配置文件
-│   │   ├── api-config.js          # API配置
-│   │   └── prompt-templates.js    # Prompt模板
-│   ├── ui/                        # UI相关模块
-│   │   ├── loading-indicator.js   # 加载指示器
-│   │   └── message-box.js         # 消息框
-│   ├── integration/               # 帆软报表集成模块
-│   │   └── fr-api-wrapper.js      # 帆软API封装
-│   └── main.js                    # 主入口文件
-├── examples/                      # 示例代码
-│   ├── integration-example.js     # 集成示例代码
-│   └── integration-example.html   # 集成示例HTML
-├── docs/                          # 文档
+├── src/                              # 源代码目录
+│   ├── core/                         # 核心功能模块
+│   │   ├── ai-analyzer.js            # AI分析模块
+│   │   ├── data-collector.js         # 数据收集模块
+│   │   ├── prompt-builder.js         # Prompt构建模块
+│   │   └── result-processor.js       # 结果处理模块
+│   ├── config/                       # 配置文件
+│   │   ├── api-config.example.js     # API配置模版，使用时复制到api-config.js
+│   │   └── prompt-templates.js       # Prompt模板
+│   ├── ui/                           # UI相关模块
+│   │   ├── loading-indicator.js      # 加载指示器
+│   │   └── message-box.js            # 消息框
+│   ├── integration/                  # 帆软报表集成模块
+│   │   └── fr-api-wrapper.exmaple.js # 帆软API封装
+│   └── main.js                       # 主入口文件
+├── examples/                         # 示例代码
+│   ├── integration-example.js        # 集成示例代码
+│   └── integration-example.html      # 集成示例HTML
+├── docs/                             # 文档
 │   ├── AI Integrated FineReport Framework.html  # 系统架构图
-│   └── development.md             # 开发指南
-├── tests/                         # 测试文件
-│   ├── mock-data/                 # 模拟数据
-│   │   └── sample-report-data.js  # 示例报表数据
-│   └── test-ai-analyzer.js        # AI分析测试
-└── README.md                      # 项目说明
+│   └── development.md                # 开发指南
+├── tests/                            # 测试文件
+│   ├── mock-data/                    # 模拟数据
+│   │   └── sample-report-data.js     # 示例报表数据
+│   └── test-ai-analyzer.js           # AI分析测试
+└── README.md                         # 项目说明
 ```
 
 ## 使用方式
@@ -60,7 +60,7 @@
 2. 在报表模板的 HTML 页面中引入框架：
 
 ```html
-<script type="module" src="/path/to/AIDA_Watchboard/src/main.js"></script>
+<script type="module" src="/path/to/AI_FineReport_Dashboard/src/main.js"></script>
 ```
 
 3. 在报表的自定义 JS 代码中初始化框架
@@ -71,28 +71,16 @@ window.AIDA_Watchboard.init({
   api: {
     url: "http://internal-vllm-service.company.com/v1/chat/completions",
     apiKey: "YOUR_API_KEY",
-    model: "deepseek-coder",
-    systemPrompt: "你是一个专业的数据分析助手，擅长分析报表数据并提供洞察。",
+    model: "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+    systemPrompt: "此处填写系统级指令",
     temperature: 0.3,
     maxTokens: 2000,
   },
 });
-F;
 // 为分析按钮添加点击事件
 const analysisButton = document.getElementById("ai-analysis-button");
 analysisButton.addEventListener("click", async function () {
   await window.AIDA_Watchboard.runBasicAnalysis();
-});
-```
-
-### 2. 自定义分析选项
-
-可以通过自定义选项来控制分析的重点和上下文：
-
-```javascript
-await window.AIDA_Watchboard.runCustomAnalysis({
-  focusAreas: ["销售趋势", "区域对比", "产品性能"],
-  additionalContext: "我们最近在西部地区加大了营销投入，请特别关注该地区的表现。",
 });
 ```
 
