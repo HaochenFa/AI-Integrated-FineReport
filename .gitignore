@@ -39,7 +39,7 @@ temp/
 
 # 本地配置文件（可能包含敏感信息）
 src/config/api-config.js
-src/config/prompt.js
+src/integration/fr-api-wrapper.js
 
 # API密钥和证书（敏感信息）
 *.pem
