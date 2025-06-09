@@ -234,43 +234,25 @@ class FRAPIWrapper {
     // 构建HTML内容
     let html = '<div class="ai-analysis-container">';
 
-    // 添加摘要
-    if (analysisResult.summary) {
-      html += `<div class="ai-analysis-summary">
-        <h3>摘要</h3>
-        <div>${analysisResult.summary}</div>
-      </div>`;
-    }
+    const excludeFields = ["timestamp", "rawResponse", "error"];
 
-    // 添加趋势
-    if (analysisResult.trends) {
-      html += `<div class="ai-analysis-trends">
-        <h3>趋势</h3>
-        <div>${analysisResult.trends}</div>
-      </div>`;
-    }
-
-    // 添加洞察
-    if (analysisResult.insights) {
-      html += `<div class="ai-analysis-insights">
-        <h3>洞察</h3>
-        <div>${analysisResult.insights}</div>
-      </div>`;
-    }
-
-    // 添加建议
-    if (analysisResult.recommendations) {
-      html += `<div class="ai-analysis-recommendations">
-        <h3>建议</h3>
-        <div>${analysisResult.recommendations}</div>
-      </div>`;
-    }
+    Object.keys(analysisResult).forEach((key) => {
+      if (!excludeFields.includes(key) && analysisResult[key]) {
+        const displayName = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1");
+        html += `<div class="ai-analysis-${key}">
+          <h3>${displayName}</h3>
+          <div>${analysisResult[key]}</div> 
+        </div>`;
+      }
+    });
 
     // 添加时间戳
     if (analysisResult.timestamp) {
       const timestamp = new Date(analysisResult.timestamp);
       const formattedTime = timestamp.toLocaleString("zh-CN");
-      html += `<div class="ai-analysis-timestamp">分析时间: ${formattedTime}</div>`;
+      html += `<div class="ai-analysis-timestamp">
+        分析时间: ${formattedTime}
+      </div>`;
     }
 
     html += "</div>";
