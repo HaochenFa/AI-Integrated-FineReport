@@ -10,17 +10,26 @@ import { getPromptTemplates } from "../config/prompt-templates.js";
  */
 function buildBasicAnalysisPrompt(reportData) {
   const templates = getPromptTemplates();
+  let prompt = templates.defaultBasicAnalysis.header + "\n\n";
 
-  const prompt = {
-    instruction: templates.defaultBasicAnalysis.header,
-    data: {
-      table: reportData.tableData || [],
-      chart: reportData.chartData || [],
-    },
-    requirements: templates.defaultBasicAnalysis.requirements,
-  };
+  // 添加表格数据
+  if (reportData.tableData && reportData.tableData.length > 0) {
+    prompt += templates.defaultBasicAnalysis.tableSection;
+    prompt += JSON.stringify(reportData.tableData, null, 2);
+    prompt += "\n```\n\n";
+  }
 
-  return JSON.stringify(prompt);
+  // 添加图表数据
+  if (reportData.chartData && reportData.chartData.length > 0) {
+    prompt += templates.defaultBasicAnalysis.chartSection;
+    prompt += JSON.stringify(reportData.chartData, null, 2);
+    prompt += "\n```\n\n";
+  }
+
+  // 添加分析要求
+  prompt += templates.defaultBasicAnalysis.requirements;
+
+  return prompt;
 }
 
 // /**
