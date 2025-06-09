@@ -115,7 +115,7 @@ const defaultAPIConfig = {
 
 更多详细的开发指南请参考 [development.md](./docs/development.md) 文件。
 
-## 架构图
+## Architecture Diagram
 
 ```mermaid
 graph TD
