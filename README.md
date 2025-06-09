@@ -113,21 +113,16 @@ const defaultAPIConfig = {
 
 根据实际的帆软报表环境，修改 `src/integration/fr-api-wrapper.js` 中的组件 ID 和 API 调用方式。
 
-更多详细的开发指南请参考 [development.md](./docs/development.md) 文件。
-
-## Architecture Diagram
+## 架构图
 
 ```mermaid
-graph TD
-    A[User Browser] -->|1. Click Analysis Button| B[FineReport JS Environment]
-    B -->|2. Fetch Report Data| B
-    B -->|3. Build Prompt| B
-    B -->|4. Call AI Analysis| C[Internal vLLM Service]
-    C -->|5. Return Analysis Results| B
-    B -->|6. Update Report Display| A
+graph TD;
+    A[User Browser] --> B[FineReport JS Environment];
+    B --> B;
+    B --> C[Internal vLLM Service];
+    C --> B;
+    B --> A;
 ```
-
-详细的系统架构图请参考 [AI Integrated FineReport Framework.html](./docs/AI%20Integrated%20FineReport%20Framework.html) 文件。
 
 ## 注意事项
 
