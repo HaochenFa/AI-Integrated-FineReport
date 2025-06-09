@@ -119,12 +119,12 @@ const defaultAPIConfig = {
 
 ```mermaid
 graph TD
-    A[用户浏览器] -->|1. 点击分析按钮| B[帆软报表 JS 环境]
-    B -->|2. 获取报表数据| B
-    B -->|3. 构建 Prompt| B
-    B -->|4. 调用 AI 分析| C[内部 vLLM 服务]
-    C -->|5. 返回分析结果| B
-    B -->|6. 更新报表显示| A
+    A[User Browser] -->|1. Click Analysis Button| B[FineReport JS Environment]
+    B -->|2. Fetch Report Data| B
+    B -->|3. Build Prompt| B
+    B -->|4. Call AI Analysis| C[Internal vLLM Service]
+    C -->|5. Return Analysis Results| B
+    B -->|6. Update Report Display| A
 ```
 
 详细的系统架构图请参考 [AI Integrated FineReport Framework.html](./docs/AI%20Integrated%20FineReport%20Framework.html) 文件。
