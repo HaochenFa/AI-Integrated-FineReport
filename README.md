@@ -117,11 +117,12 @@ const defaultAPIConfig = {
 
 ```mermaid
 graph TD;
-    A[User Browser] --> B[FineReport JS Environment];
-    B --> B;
-    B --> C[Internal vLLM Service];
-    C --> B;
-    B --> A;
+    A[User Browser] -->|1. Click Analysis Button| B[FineReport JS Environment];
+    B -->|2. Fetch Report Data| B;
+    B -->|3. Build Prompt| B;
+    B -->|4. Call AI Analysis| C[Internal vLLM Service];
+    C -->|5. Return Analysis Results| B;
+    B -->|6. Update Report Display| A;
 ```
 
 ## 注意事项
