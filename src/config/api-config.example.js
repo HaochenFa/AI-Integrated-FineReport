@@ -10,7 +10,7 @@ const availableModels = [
     provider: "deepseek-ai",
     url: "http://internal-vllm-service.company.com/v1/chat/completions",
     maxTokens: 2000,
-    isPrimary: true
+    isPrimary: true,
   },
   {
     id: "Qwen/Qwen-7B-Chat",
@@ -18,7 +18,7 @@ const availableModels = [
     provider: "Qwen",
     url: "http://internal-vllm-service.company.com/v1/chat/completions",
     maxTokens: 1500,
-    isPrimary: false
+    isPrimary: false,
   },
   {
     id: "THUDM/chatglm3-6b",
@@ -26,8 +26,8 @@ const availableModels = [
     provider: "THUDM",
     url: "http://internal-vllm-service.company.com/v1/chat/completions",
     maxTokens: 1500,
-    isPrimary: false
-  }
+    isPrimary: false,
+  },
 ];
 
 // 默认API配置
@@ -47,7 +47,7 @@ const defaultAPIConfig = {
   maxTokens: 2000,
   // 模型回退设置
   modelFallback: true, // 是否启用模型回退
-  availableModels: availableModels // 可用模型列表
+  availableModels: availableModels, // 可用模型列表
 };
 
 // 当前使用的API配置
@@ -89,7 +89,7 @@ function getAvailableModels() {
  * @returns {Object} 主要模型配置
  */
 function getPrimaryModel() {
-  return availableModels.find(model => model.isPrimary) || availableModels[0];
+  return availableModels.find((model) => model.isPrimary) || availableModels[0];
 }
 
 /**
@@ -97,7 +97,7 @@ function getPrimaryModel() {
  * @returns {Array} 备用模型列表
  */
 function getFallbackModels() {
-  return availableModels.filter(model => !model.isPrimary);
+  return availableModels.filter((model) => !model.isPrimary);
 }
 
 /**
@@ -106,26 +106,26 @@ function getFallbackModels() {
  * @returns {boolean} 是否切换成功
  */
 function switchToModel(modelId) {
-  const model = availableModels.find(m => m.id === modelId);
+  const model = availableModels.find((m) => m.id === modelId);
   if (!model) {
     return false;
   }
-  
+
   updateAPIConfig({
     model: model.id,
     url: model.url,
-    maxTokens: model.maxTokens
+    maxTokens: model.maxTokens,
   });
-  
+
   return true;
 }
 
-export { 
-  getAPIConfig, 
-  updateAPIConfig, 
+export {
+  getAPIConfig,
+  updateAPIConfig,
   resetAPIConfig,
   getAvailableModels,
   getPrimaryModel,
   getFallbackModels,
-  switchToModel
+  switchToModel,
 };

@@ -21,49 +21,8 @@ import { showPerformanceDashboard, configureDashboard } from "./ui/performance-d
  * @returns {Promise<Boolean>} 分析是否成功
  */
 async function runBasicAnalysis(options = {}) {
-  try {
-    // 1. 收集报表数据
-    const reportData = collectReportData();
-    if (!reportData || (!reportData.tableData && !reportData.chartData)) {
-      showErrorMessage("无法获取报表数据，请确保报表已加载完成。");
-      return false;
-    }
-
-    // 2. 构建分析prompt
-    const prompt = buildBasicAnalysisPrompt(reportData);
-
-    // 3. 调用AI分析，传递数据时间戳以确保缓存与数据版本一致
-    const result = await analyzeWithAI(prompt, options, reportData.timestamp);
-    if (!result) {
-      showErrorMessage("AI分析失败，请稍后再试。");
-      return false;
-    }
-
-    // 4. 更新分析结果到报表
-    const frAPI = getFRAPIWrapper();
-
-    // 添加响应时间信息到成功消息
-    let successMessage = "AI分析完成！";
-    if (result.responseTime) {
-      successMessage += ` 响应时间: ${
-        result.responseTimeFormatted || result.responseTime + "毫秒"
-      }`;
-    }
-
-    const updateSuccess = frAPI.updateAnalysisResult(result);
-
-    if (updateSuccess) {
-      showSuccessMessage(successMessage);
-      return true;
-    } else {
-      showErrorMessage("无法更新分析结果到报表。");
-      return false;
-    }
-  } catch (error) {
-    console.error("执行AI分析出错:", error);
-    showErrorMessage("执行AI分析过程中发生错误。");
-    return false;
-  }
+  // 直接调用流式分析，使用默认的结果容器ID
+  return runStreamAnalysis(options);
 }
 
 /**
