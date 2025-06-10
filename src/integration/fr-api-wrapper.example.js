@@ -1,8 +1,8 @@
 /**
  * 帆软API封装模块 - 封装帆软报表API的调用
  */
-
 import { processResult } from "../core/result-processor.js";
+
 // 帆软报表组件ID (占位符，实际使用时需替换为实际的组件ID)
 const TABLE_COMPONENT_ID = "table1";
 const CHART_COMPONENT_ID = "chart1";
@@ -192,9 +192,10 @@ class FRAPIWrapper {
   /**
    * 更新分析结果到报表
    * @param {Object} analysisResult - 分析结果
+   * @param {Object} options - 处理选项
    * @returns {Boolean} 更新是否成功
    */
-  updateAnalysisResult(analysisResult) {
+  updateAnalysisResult(analysisResult, options = {}) {
     try {
       if (!this.isAPIAvailable) {
         console.warn("帆软API不可用");
@@ -208,8 +209,16 @@ class FRAPIWrapper {
         return false;
       }
 
+      // 使用增强的结果处理器处理分析结果
+      const processedResult = processResult(analysisResult, {
+        outputFormat: "html",
+        includeRaw: false,
+        validateResult: true,
+        ...options,
+      });
+
       // 构建HTML内容
-      const htmlContent = this._buildResultHTML(analysisResult);
+      const htmlContent = this._buildResultHTML(processedResult);
 
       // 更新结果容器
       // 注意：这里使用的是占位符API，实际使用时需要根据帆软报表的实际API进行调整
@@ -235,26 +244,85 @@ class FRAPIWrapper {
     // 构建HTML内容
     let html = '<div class="ai-analysis-container">';
 
-    const excludeFields = ["timestamp", "rawResponse", "error"];
+    // 如果有错误，显示错误信息
+    if (analysisResult.error) {
+      html += `<div class="ai-analysis-error">
+        <h3>分析错误</h3>
+        <div>${analysisResult.error.message || "未知错误"}</div>
+      </div>`;
 
-    Object.keys(analysisResult).forEach((key) => {
-      if (!excludeFields.includes(key) && analysisResult[key]) {
-        const displayName = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1");
-        html += `<div class="ai-analysis-${key}">
-          <h3>${displayName}</h3>
-          <div>${analysisResult[key]}</div> 
+      // 添加时间戳并返回
+      if (analysisResult.timestamp) {
+        const timestamp = new Date(analysisResult.timestamp);
+        const formattedTime = timestamp.toLocaleString("zh-CN");
+        html += `<div class="ai-analysis-timestamp">
+          分析时间: ${formattedTime}
+        </div>`;
+      }
+
+      html += "</div>";
+      return html;
+    }
+
+    // 主要分析结果部分
+    const mainSections = [
+      { key: "summary", title: "摘要" },
+      { key: "trends", title: "趋势" },
+      { key: "insights", title: "洞察" },
+      { key: "recommendations", title: "建议" },
+    ];
+
+    mainSections.forEach((section) => {
+      if (analysisResult[section.key]) {
+        html += `<div class="ai-analysis-${section.key}">
+          <h3>${section.title}</h3>
+          <div>${analysisResult[section.key]}</div> 
         </div>`;
       }
     });
 
-    // 添加时间戳
+    // 如果有验证结果，显示验证信息
+    if (analysisResult.validation && !analysisResult.validation.isValid) {
+      html += `<div class="ai-analysis-validation">
+        <h3>分析质量</h3>
+        <div class="quality-score">质量评分: ${analysisResult.validation.qualityScore}/10</div>`;
+
+      if (analysisResult.validation.issues && analysisResult.validation.issues.length > 0) {
+        html += '<ul class="validation-issues">';
+        analysisResult.validation.issues.forEach((issue) => {
+          html += `<li>${issue}</li>`;
+        });
+        html += "</ul>";
+      }
+
+      html += "</div>";
+    }
+
+    // 如果有缺失字段，显示提示
+    if (analysisResult.missingFields && analysisResult.missingFields.length > 0) {
+      html += `<div class="ai-analysis-missing">
+        <h3>注意</h3>
+        <div>分析结果缺少以下部分: ${analysisResult.missingFields.join(", ")}</div>
+      </div>`;
+    }
+
+    // 添加时间戳和响应时间
+    html += '<div class="ai-analysis-footer">';
+
     if (analysisResult.timestamp) {
       const timestamp = new Date(analysisResult.timestamp);
       const formattedTime = timestamp.toLocaleString("zh-CN");
-      html += `<div class="ai-analysis-timestamp">
-        分析时间: ${formattedTime}
-      </div>`;
+      html += `<div class="ai-analysis-timestamp">分析时间: ${formattedTime}</div>`;
     }
+
+    // 添加响应时间信息（如果有）
+    if (analysisResult.responseTime !== undefined) {
+      html += `<div class="ai-response-time">响应时间: ${
+        analysisResult.responseTimeFormatted || analysisResult.responseTime + "毫秒"
+      }</div>`;
+    }
+
+    html += "</div>";
 
     html += "</div>";
 
