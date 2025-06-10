@@ -67,23 +67,23 @@ function updateLoadingProgress(percent) {
   try {
     // 确保百分比在有效范围内
     const validPercent = Math.max(0, Math.min(100, percent));
-    
+
     // 尝试使用帆软报表API更新进度条
     if (window.FR && window.FR.Widget) {
       const progressElement = window.FR.Widget.getWidgetByName(PROGRESS_BAR_ID);
-      if (progressElement && typeof progressElement.setValue === 'function') {
+      if (progressElement && typeof progressElement.setValue === "function") {
         progressElement.setValue(validPercent);
         return;
       }
     }
-    
+
     // 如果帆软API不可用，则使用DOM操作
     const progressElement = document.getElementById(PROGRESS_BAR_ID);
     if (progressElement) {
       // 根据元素类型不同，可能需要不同的更新方式
-      if (progressElement.tagName.toLowerCase() === 'progress') {
+      if (progressElement.tagName.toLowerCase() === "progress") {
         progressElement.value = validPercent;
-        progressElement.setAttribute('value', validPercent);
+        progressElement.setAttribute("value", validPercent);
       } else {
         // 假设是div类型的进度条
         progressElement.style.width = `${validPercent}%`;

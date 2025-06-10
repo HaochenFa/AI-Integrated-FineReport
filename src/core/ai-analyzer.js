@@ -29,7 +29,7 @@ const DEFAULT_REQUEST_CONFIG = {
   modelFallback: true, // 是否启用模型回退
   maxFallbackAttempts: 2, // 最大模型回退尝试次数
   maxConcurrentRequests: 2, // 最大并发请求数
-  streamResponse: false, // 是否使用流式响应
+  streamResponse: true, // 是否使用流式响应（默认启用）
 };
 
 // 当前请求状态
