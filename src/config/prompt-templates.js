@@ -34,6 +34,9 @@ const defaultPromptTemplates = {
     header: "请你基于以下报表中的总结性数据进行分析，提供关键数据洞察、异常、发现和建议。",
     tableSection: "表格数据：\n```json\n",
     chartSection: "图表数据：\n```json\n",
+    crossTableSection: "交叉表数据：\n```json\n",
+    dashboardSection: "仪表盘数据：\n```json\n",
+    mapSection: "地图数据：\n```json\n",
     requirements:
       "请按照以下结构给出分析报告：\n1. 总结分析\n2. 措施分析\n3. 改善建议\n4. 关键数据\n5. 下一步行动。\n",
   },

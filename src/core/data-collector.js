@@ -16,12 +16,24 @@ function collectReportData() {
   // 获取图表数据
   const chartData = frAPI.getChartData();
 
+  // 获取交叉表数据
+  const crossTableData = frAPI.getCrossTableData();
+
+  // 获取仪表盘数据
+  const dashboardData = frAPI.getDashboardData();
+
+  // 获取地图数据
+  const mapData = frAPI.getMapData();
+
   // 获取其他相关数据
   const metaData = frAPI.getReportMetaData();
 
   return {
     tableData,
     chartData,
+    crossTableData,
+    dashboardData,
+    mapData,
     metaData,
     timestamp: new Date().toISOString(),
   };
