@@ -20,9 +20,30 @@ function buildBasicAnalysisPrompt(reportData) {
   }
 
   // 添加图表数据
-  if (reportData.chartData && reportData.chartData.length > 0) {
+  if (reportData.chartData && Object.keys(reportData.chartData).length > 0) {
     prompt += templates.defaultBasicAnalysis.chartSection;
     prompt += JSON.stringify(reportData.chartData, null, 2);
+    prompt += "\n```\n\n";
+  }
+
+  // 添加交叉表数据
+  if (reportData.crossTableData && Object.keys(reportData.crossTableData).length > 0) {
+    prompt += templates.defaultBasicAnalysis.crossTableSection || "交叉表数据：\n```json\n";
+    prompt += JSON.stringify(reportData.crossTableData, null, 2);
+    prompt += "\n```\n\n";
+  }
+
+  // 添加仪表盘数据
+  if (reportData.dashboardData && Object.keys(reportData.dashboardData).length > 0) {
+    prompt += templates.defaultBasicAnalysis.dashboardSection || "仪表盘数据：\n```json\n";
+    prompt += JSON.stringify(reportData.dashboardData, null, 2);
+    prompt += "\n```\n\n";
+  }
+
+  // 添加地图数据
+  if (reportData.mapData && Object.keys(reportData.mapData).length > 0) {
+    prompt += templates.defaultBasicAnalysis.mapSection || "地图数据：\n```json\n";
+    prompt += JSON.stringify(reportData.mapData, null, 2);
     prompt += "\n```\n\n";
   }
 
