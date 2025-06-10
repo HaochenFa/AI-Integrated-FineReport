@@ -2,6 +2,7 @@
  * 帆软API封装模块 - 封装帆软报表API的调用
  */
 
+import { processResult } from "../core/result-processor.js";
 // 帆软报表组件ID (占位符，实际使用时需替换为实际的组件ID)
 const TABLE_COMPONENT_ID = "table1";
 const CHART_COMPONENT_ID = "chart1";
