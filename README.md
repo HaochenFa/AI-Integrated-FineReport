@@ -84,6 +84,55 @@ analysisButton.addEventListener("click", async function () {
 });
 ```
 
+### 2. 流式响应特性
+
+本框架默认启用流式响应（Stream Response）特性，这意味着：
+
+- AI 分析结果会实时显示在界面上，无需等待完整分析完成
+- 用户可以立即看到分析进展，提升交互体验
+- 对于复杂数据集的分析，减少了用户等待时间的感知
+
+流式响应已内置于框架核心，使用`runBasicAnalysis()`时会自动启用，无需额外配置。如需自定义流式响应行为，可参考开发文档中的高级功能部分。
+
+### 3. 性能监控仪表盘
+
+本框架内置了强大的性能监控功能，可以帮助您跟踪和优化 AI 分析的性能：
+
+- **实时统计**：跟踪总请求数、成功率、平均响应时间等关键指标
+- **模型性能**：监控不同模型的性能表现，包括请求数、成功率和响应时间
+- **Token 使用情况**：统计 Prompt 和 Completion 的 Token 使用量及估算成本
+- **缓存效率**：监控缓存命中率，优化系统性能
+- **请求历史**：查看最近的请求记录，包括详细的请求参数和结果
+
+使用方法：
+
+```javascript
+// 显示性能监控仪表盘
+window.AIDA_Watchboard.showPerformanceDashboard("dashboard-container", "admin");
+
+// 获取性能数据
+const performanceData = window.AIDA_Watchboard.getPerformanceData();
+
+// 重置性能数据
+window.AIDA_Watchboard.resetPerformanceData();
+
+// 配置性能监控
+window.AIDA_Watchboard.configurePerformanceMonitor({
+  enabled: true,
+  maxRecentRequests: 20,
+  persistData: true,
+});
+
+// 配置仪表盘显示
+window.AIDA_Watchboard.configureDashboard({
+  refreshInterval: 10000,
+  showModelDetails: true,
+  showTokenUsage: true,
+  showRecentRequests: true,
+  maxRecentRequests: 15,
+});
+```
+
 ## 开发指南
 
 ### 环境准备
