@@ -3,16 +3,17 @@
  */
 import { collectReportData } from "./core/data-collector.js";
 import { buildBasicAnalysisPrompt } from "./core/prompt-builder.js";
-import { analyzeWithAI } from "./core/ai-analyzer.js";
+import { analyzeWithAI, streamAnalyzeWithAI } from "./core/ai-analyzer.js";
 import { getFRAPIWrapper } from "./integration/fr-api-wrapper.js";
 import { showSuccessMessage, showErrorMessage } from "./ui/message-box.js";
 import { updateAPIConfig } from "./config/api-config.js";
 
 /**
  * 执行基础AI分析
+ * @param {Object} [options] - 分析选项
  * @returns {Promise<Boolean>} 分析是否成功
  */
-async function runBasicAnalysis() {
+async function runBasicAnalysis(options = {}) {
   try {
     // 1. 收集报表数据
     const reportData = collectReportData();
@@ -25,7 +26,7 @@ async function runBasicAnalysis() {
     const prompt = buildBasicAnalysisPrompt(reportData);
 
     // 3. 调用AI分析
-    const result = await analyzeWithAI(prompt);
+    const result = await analyzeWithAI(prompt, options);
     if (!result) {
       showErrorMessage("AI分析失败，请稍后再试。");
       return false;
@@ -45,6 +46,101 @@ async function runBasicAnalysis() {
   } catch (error) {
     console.error("执行AI分析出错:", error);
     showErrorMessage("执行AI分析过程中发生错误。");
+    return false;
+  }
+}
+
+/**
+ * 使用流式响应执行AI分析
+ * @param {Object} [options] - 分析选项
+ * @param {string} [resultContainerId] - 结果容器元素ID
+ * @returns {Promise<Boolean>} 分析是否成功
+ */
+async function runStreamAnalysis(options = {}, resultContainerId = "ai-analysis-result") {
+  try {
+    // 1. 收集报表数据
+    const reportData = collectReportData();
+    if (!reportData || (!reportData.tableData && !reportData.chartData)) {
+      showErrorMessage("无法获取报表数据，请确保报表已加载完成。");
+      return false;
+    }
+
+    // 2. 构建分析prompt
+    const prompt = buildBasicAnalysisPrompt(reportData);
+    
+    // 获取结果容器元素
+    let resultContainer;
+    if (window.FR && window.FR.Widget) {
+      resultContainer = window.FR.Widget.getWidgetByName(resultContainerId);
+    } else {
+      resultContainer = document.getElementById(resultContainerId);
+    }
+    
+    if (!resultContainer) {
+      console.warn(`结果容器元素 ${resultContainerId} 未找到，将只在控制台显示结果`);
+    }
+    
+    // 清空结果容器
+    if (resultContainer) {
+      if (typeof resultContainer.setText === 'function') {
+        resultContainer.setText("");
+      } else if (resultContainer.innerHTML !== undefined) {
+        resultContainer.innerHTML = "<div class='ai-analysis-stream-container'></div>";
+      }
+    }
+    
+    // 获取或创建流式内容容器
+    let streamContainer;
+    if (resultContainer) {
+      if (resultContainer.innerHTML !== undefined) {
+        streamContainer = resultContainer.querySelector('.ai-analysis-stream-container');
+        if (!streamContainer) {
+          streamContainer = document.createElement('div');
+          streamContainer.className = 'ai-analysis-stream-container';
+          resultContainer.appendChild(streamContainer);
+        }
+      }
+    }
+    
+    // 创建临时存储完整响应的变量
+    let completeResponse = "";
+    
+    // 3. 调用流式AI分析
+    const result = await streamAnalyzeWithAI(
+      prompt, 
+      options,
+      // 处理每个响应块
+      (chunk) => {
+        completeResponse += chunk;
+        console.log("收到流式响应块:", chunk);
+        
+        // 更新UI
+        if (streamContainer) {
+          streamContainer.textContent = completeResponse;
+        } else if (resultContainer && typeof resultContainer.setText === 'function') {
+          resultContainer.setText(completeResponse);
+        }
+      },
+      // 处理完成回调
+      (finalResult) => {
+        if (!finalResult) return;
+        
+        // 4. 更新最终分析结果到报表
+        const frAPI = getFRAPIWrapper();
+        const updateSuccess = frAPI.updateAnalysisResult(finalResult);
+        
+        if (updateSuccess) {
+          showSuccessMessage("流式AI分析完成！");
+        } else {
+          showErrorMessage("无法更新最终分析结果到报表。");
+        }
+      }
+    );
+    
+    return !!result;
+  } catch (error) {
+    console.error("执行流式AI分析出错:", error);
+    showErrorMessage("执行流式AI分析过程中发生错误。");
     return false;
   }
 }
@@ -112,6 +208,7 @@ function init(config = {}) {
   // 注册到全局对象，方便在帆软报表中调用
   window.AIDA_Watchboard = {
     runBasicAnalysis,
+    runStreamAnalysis,
     configureAPI,
   };
 
@@ -119,4 +216,4 @@ function init(config = {}) {
 }
 
 // 导出公共API
-export { init, runBasicAnalysis, configureAPI };
+export { init, runBasicAnalysis, runStreamAnalysis, configureAPI };
