@@ -1,5 +1,7 @@
 /**
- * AI集成帆软报表框架 - 主入口文件
+ * @file main.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description AI集成帆软报表框架 - 主入口文件
  */
 import { collectReportData } from "./core/data-collector.js";
 import { buildBasicAnalysisPrompt } from "./core/prompt-builder.js";

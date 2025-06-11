@@ -1,5 +1,7 @@
 /**
- * 全局样式模块 - 管理应用的全局CSS样式
+ * @file styles.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 全局样式模块 - 管理应用的全局CSS样式
  */
 
 /**

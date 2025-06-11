@@ -1,5 +1,7 @@
 /**
- * 聊天窗口样式模块 - 为AI对话窗口提供样式
+ * @file chat-styles.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 聊天窗口样式模块 - 为AI对话窗口提供样式
  */
 
 /**

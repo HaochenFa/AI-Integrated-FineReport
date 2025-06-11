@@ -1,5 +1,7 @@
 /**
- * 加载指示器模块 - 管理AI分析过程中的加载状态显示
+ * @file loading-indicator.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 加载指示器模块 - 管理AI分析过程中的加载状态显示
  */
 
 // 加载指示器DOM元素ID (占位符，实际使用时需替换为帆软报表中的元素ID)

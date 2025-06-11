@@ -1,5 +1,7 @@
 /**
- * 性能监控仪表盘模块 - 用于显示AI分析性能数据
+ * @file performance-dashboard.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 性能监控仪表盘模块 - 用于显示AI分析性能数据
  */
 import {
   getPerformanceData,

@@ -1,5 +1,7 @@
 /**
- * FineReport聊天集成模块 - 在FineReport界面中添加聊天功能
+ * @file fr-chat-integration.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description FineReport聊天集成模块 - 在FineReport界面中添加聊天功能
  */
 
 import { showChatWindow, hideChatWindow, toggleChatWindow } from "../ui/chat-window.js";

@@ -1,5 +1,7 @@
 /**
- * 结果处理模块 - 处理AI返回的分析结果
+ * @file result-processor.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 结果处理模块 - 处理AI返回的分析结果
  */
 
 /**

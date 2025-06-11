@@ -1,5 +1,7 @@
 /**
- * 性能监控模块 - 负责收集和存储AI分析性能数据
+ * @file performance-monitor.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 性能监控模块 - 负责收集和存储AI分析性能数据
  */
 
 // 性能监控配置

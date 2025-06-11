@@ -1,5 +1,7 @@
 /**
- * 帆软API封装模块 - 封装帆软报表API的调用
+ * @file fr-api-wrapper.example.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 帆软API封装模块 - 封装帆软报表API的调用
  */
 import { processResult } from "../core/result-processor.js";
 

@@ -1,7 +1,8 @@
 /**
- * 聊天管理器模块 - 管理AI对话流程和历史
+ * @file chat-manager.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 聊天管理器模块 - 管理AI对话流程和历史
  */
-
 import { addMessage } from "../ui/chat-window.js";
 import { collectReportData } from "../integration/data-collector.js";
 import { buildChatPrompt } from "./chat-prompt-builder.js";

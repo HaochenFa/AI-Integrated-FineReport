@@ -1,5 +1,7 @@
 /**
- * Prompt模板配置模块 - 管理不同类型分析的prompt模板
+ * @file prompt-templates.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description Prompt模板配置模块 - 管理不同类型分析的prompt模板
  */
 
 // 默认prompt模板
