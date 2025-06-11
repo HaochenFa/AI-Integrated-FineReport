@@ -1,5 +1,7 @@
 # AI 集成帆软报表框架 (AIDA Watchboard)
 
+**版本：0.0.1-alpha**
+
 本项目旨在将 AI 分析能力集成到帆软报表(FineReport)系统中，通过 JavaScript 模块调用内部 vLLM 服务(DeepSeek)，实现对报表数据的智能分析和洞察，为用户提供更加智能化的数据分析体验。
 
 ## 项目概述
@@ -155,13 +157,34 @@ window.AIDA_Watchboard.configureDashboard({
 });
 ```
 
-## 开发指南
+## 安装和构建
 
 ### 环境准备
 
 1. 确保已安装 Node.js 环境
 2. 克隆项目到本地
 3. 安装依赖：`npm install`
+
+### 构建项目
+
+本项目使用 Rollup 进行打包，提供以下 npm 脚本：
+
+```bash
+# 开发模式（监视文件变化并实时构建）
+npm run dev
+
+# 生产构建
+npm run build
+
+# 代码规范检查
+npm run lint
+```
+
+构建后的文件将输出到`dist`目录，主要包括：
+
+- `ai-integrated-fr.esm.js`：ES 模块格式的主文件
+
+## 开发指南
 
 ### 修改配置
 
@@ -194,6 +217,64 @@ graph TD;
     B -->|Call Analysis| C[Internal vLLM Service];
     C -->|Return Results| B;
     B -->|Update Display| A;
+```
+
+## API 参考
+
+框架提供以下主要 API：
+
+### 核心 API
+
+```javascript
+// 初始化框架
+init(config);
+
+// 执行基础AI分析
+runBasicAnalysis(options);
+
+// 使用流式响应执行AI分析
+runStreamAnalysis(options, resultContainerId);
+
+// 配置API参数
+configureAPI(config);
+```
+
+### 性能监控 API
+
+```javascript
+// 获取性能数据
+getPerformanceData();
+
+// 重置性能数据
+resetPerformanceData();
+
+// 配置性能监控
+configurePerformanceMonitor(options);
+
+// 显示性能监控仪表盘
+showPerformanceDashboard(containerId, role);
+
+// 配置仪表盘显示
+configureDashboard(options);
+```
+
+### 聊天功能 API
+
+```javascript
+// 显示聊天窗口
+showChatWindow();
+
+// 隐藏聊天窗口
+hideChatWindow();
+
+// 切换聊天窗口显示状态
+toggleChatWindow();
+
+// 获取聊天历史
+getChatHistory();
+
+// 清除聊天历史
+clearChatHistory();
 ```
 
 ## 注意事项
