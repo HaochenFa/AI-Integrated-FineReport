@@ -15,9 +15,9 @@ const DEFAULT_REQUEST_CONFIG = {
   retryDelay: 1000,     // 重试间隔(毫秒)
   timeout: 30000,       // 请求超时时间(毫秒)
   exponentialBackoff: true, // 是否使用指数退避策略
-  useCache: true,       // 是否使用缓存
-  cacheTTL: 3600000,    // 缓存有效期(毫秒)，默认1小时
-  modelFallback: true,  // 是否启用模型回退
+  useCache: true, // 是否使用缓存
+  cacheTTL: 300000, // 缓存有效期(毫秒)，默认5分钟
+  modelFallback: true, // 是否启用模型回退
   maxFallbackAttempts: 2, // 最大模型回退尝试次数
   maxConcurrentRequests: 2, // 最大并发请求数
   streamResponse: false  // 是否使用流式响应
