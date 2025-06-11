@@ -1,0 +1,42 @@
+{
+  "name": "ai-integrated-fr",
+  "version": "0.0.1-alpha",
+  "description": "AI集成帆软报表框架，提供智能数据分析和交互式聊天功能",
+  "type": "module",
+  "main": "dist/ai-integrated-fr.esm.js",
+  "module": "dist/ai-integrated-fr.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/ai-integrated-fr.esm.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "lint": "eslint src"
+  },
+  "keywords": [
+    "finereport",
+    "ai",
+    "dashboard",
+    "analytics",
+    "visualization"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "eslint": "^8.56.0",
+    "rollup": "^4.9.1"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
+}
