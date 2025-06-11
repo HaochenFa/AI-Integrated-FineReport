@@ -1,5 +1,7 @@
 /**
- * 聊天窗口模块 - 管理AI对话窗口的显示和交互
+ * @file chat-window.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 聊天窗口模块 - 管理AI对话窗口的显示和交互
  */
 
 // 聊天窗口DOM元素ID

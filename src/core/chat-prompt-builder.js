@@ -1,5 +1,7 @@
 /**
- * 聊天提示构建器模块 - 构建包含聊天历史和报表数据的提示
+ * @file chat-prompt-builder.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 聊天提示构建器模块 - 构建包含聊天历史和报表数据的提示
  */
 
 import { getCurrentAPIConfig } from "../config/api-config.js";

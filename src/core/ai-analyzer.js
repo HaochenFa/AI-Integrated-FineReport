@@ -1,5 +1,7 @@
 /**
- * AI分析模块 - 负责与vLLM服务交互
+ * @file ai-analyzer.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description AI分析模块 - 负责与vLLM服务交互
  */
 import { getAPIConfig, getFallbackModels, switchToModel } from "../config/api-config.js";
 import {

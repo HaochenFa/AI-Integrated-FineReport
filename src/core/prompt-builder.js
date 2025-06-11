@@ -1,5 +1,7 @@
 /**
- * Prompt构建模块 - 根据报表数据构建AI分析的prompt
+ * @file prompt-builder.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description Prompt构建模块 - 根据报表数据构建AI分析的prompt
  */
 import { getPromptTemplates } from "../config/prompt-templates.js";
 

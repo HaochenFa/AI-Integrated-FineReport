@@ -1,5 +1,7 @@
 /**
- * 消息框模块 - 管理错误和提示信息的显示
+ * @file message-box.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 消息框模块 - 管理错误和提示信息的显示
  */
 
 // 消息框DOM元素ID (占位符，实际使用时需替换为帆软报表中的元素ID)

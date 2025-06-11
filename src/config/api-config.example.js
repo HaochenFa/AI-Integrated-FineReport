@@ -1,5 +1,7 @@
 /**
- * API配置模块 - 管理与vLLM服务交互的配置
+ * @file api-config.example.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description API配置模块 - 管理与vLLM服务交互的配置
  */
 
 // 可用模型列表

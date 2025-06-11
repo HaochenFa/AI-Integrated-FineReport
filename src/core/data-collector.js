@@ -1,5 +1,7 @@
 /**
- * 数据收集模块 - 从帆软报表中收集数据
+ * @file data-collector.js
+ * @author Haochen (Billy) Fa 法昊辰
+ * @description 数据收集模块 - 从帆软报表中收集数据
  */
 import { getFRAPIWrapper } from "../integration/fr-api-wrapper.js";
 
