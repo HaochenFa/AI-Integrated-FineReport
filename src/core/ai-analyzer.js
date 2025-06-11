@@ -27,7 +27,7 @@ const DEFAULT_REQUEST_CONFIG = {
   timeout: 30000, // 请求超时时间(毫秒)
   exponentialBackoff: true, // 是否使用指数退避策略
   useCache: true, // 是否使用缓存
-  cacheTTL: 3600000, // 缓存有效期(毫秒)，默认1小时
+  cacheTTL: 300000, // 缓存有效期(毫秒)，默认5分钟
   modelFallback: true, // 是否启用模型回退
   maxFallbackAttempts: 2, // 最大模型回退尝试次数
   maxConcurrentRequests: 2, // 最大并发请求数
