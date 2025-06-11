@@ -354,20 +354,20 @@ function applyMarkdownFormatting(element) {
   let html = element.innerHTML;
 
   // 代码块
-  html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-  
+  html = html.replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>");
+
   // 行内代码
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-  
+  html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+
   // 粗体
-  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  
+  html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+
   // 斜体
-  html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-  
+  html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+
   // 列表项
-  html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
-  
+  html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
+
   element.innerHTML = html;
 }
 

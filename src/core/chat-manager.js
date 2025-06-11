@@ -80,7 +80,9 @@ async function processUserMessage(message) {
     });
 
     // 获取完整的助手回复
-    const assistantResponse = assistantMessageElement.querySelector(".ai-chat-message-content").innerHTML;
+    const assistantResponse = assistantMessageElement.querySelector(
+      ".ai-chat-message-content"
+    ).innerHTML;
 
     // 更新聊天历史
     updateChatHistory(message, assistantResponse);
@@ -132,10 +134,10 @@ function updateAssistantMessageContent(messageElement, content) {
   const contentElement = messageElement.querySelector(".ai-chat-message-content");
   if (contentElement) {
     contentElement.innerHTML = content;
-    
+
     // 应用Markdown格式化
     applyMarkdownFormatting(contentElement);
-    
+
     // 滚动到底部
     const chatBody = document.getElementById("ai-chat-body");
     if (chatBody) {
@@ -154,20 +156,20 @@ function applyMarkdownFormatting(element) {
   let html = element.innerHTML;
 
   // 代码块
-  html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-  
+  html = html.replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>");
+
   // 行内代码
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-  
+  html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+
   // 粗体
-  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  
+  html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+
   // 斜体
-  html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-  
+  html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+
   // 列表项
-  html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
-  
+  html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
+
   element.innerHTML = html;
 }
 
@@ -249,7 +251,10 @@ async function generateDefaultAnalysisReport() {
     const assistantMessageElement = createAssistantMessagePlaceholder();
 
     // 更新占位符内容，显示正在生成分析报告
-    updateAssistantMessageContent(assistantMessageElement, "<div class=\"ai-typing-indicator\">正在生成默认分析报告...</div>");
+    updateAssistantMessageContent(
+      assistantMessageElement,
+      '<div class="ai-typing-indicator">正在生成默认分析报告...</div>'
+    );
 
     // 流式调用AI分析
     await streamAnalyzeWithAI(prompt, {}, (chunk) => {
@@ -258,14 +263,18 @@ async function generateDefaultAnalysisReport() {
     });
 
     // 获取完整的助手回复
-    const assistantResponse = assistantMessageElement.querySelector(".ai-chat-message-content").innerHTML;
+    const assistantResponse = assistantMessageElement.querySelector(
+      ".ai-chat-message-content"
+    ).innerHTML;
 
     // 更新聊天历史
     updateChatHistory("请为当前报表生成一份分析报告", assistantResponse);
 
     // 添加后续引导消息
     setTimeout(() => {
-      addAssistantMessage("以上是基于当前报表数据的默认分析报告。您可以询问更多关于报表数据的问题，或者请求更深入的分析。");
+      addAssistantMessage(
+        "以上是基于当前报表数据的默认分析报告。您可以询问更多关于报表数据的问题，或者请求更深入的分析。"
+      );
     }, 1000);
   } catch (error) {
     console.error("生成默认分析报告时出错:", error);
@@ -276,8 +285,4 @@ async function generateDefaultAnalysisReport() {
   }
 }
 
-export {
-  initChatManager,
-  getChatHistory,
-  clearChatHistory,
-};
+export { initChatManager, getChatHistory, clearChatHistory };

@@ -62,7 +62,7 @@ function buildSystemPrompt(reportData) {
   if (reportData.table && reportData.table.length > 0) {
     systemPrompt += "\n## 表格数据\n";
     reportData.table.forEach((table, index) => {
-      systemPrompt += `\n### 表格 ${index + 1}: ${table.name || '未命名表格'}\n`;
+      systemPrompt += `\n### 表格 ${index + 1}: ${table.name || "未命名表格"}\n`;
       systemPrompt += JSON.stringify(table, null, 2);
       systemPrompt += "\n";
     });
@@ -72,7 +72,7 @@ function buildSystemPrompt(reportData) {
   if (reportData.chart && reportData.chart.length > 0) {
     systemPrompt += "\n## 图表数据\n";
     reportData.chart.forEach((chart, index) => {
-      systemPrompt += `\n### 图表 ${index + 1}: ${chart.name || '未命名图表'}\n`;
+      systemPrompt += `\n### 图表 ${index + 1}: ${chart.name || "未命名图表"}\n`;
       systemPrompt += JSON.stringify(chart, null, 2);
       systemPrompt += "\n";
     });
@@ -82,7 +82,7 @@ function buildSystemPrompt(reportData) {
   if (reportData.crosstable && reportData.crosstable.length > 0) {
     systemPrompt += "\n## 交叉表数据\n";
     reportData.crosstable.forEach((crosstable, index) => {
-      systemPrompt += `\n### 交叉表 ${index + 1}: ${crosstable.name || '未命名交叉表'}\n`;
+      systemPrompt += `\n### 交叉表 ${index + 1}: ${crosstable.name || "未命名交叉表"}\n`;
       systemPrompt += JSON.stringify(crosstable, null, 2);
       systemPrompt += "\n";
     });
@@ -92,7 +92,7 @@ function buildSystemPrompt(reportData) {
   if (reportData.dashboard && reportData.dashboard.length > 0) {
     systemPrompt += "\n## 仪表盘数据\n";
     reportData.dashboard.forEach((dashboard, index) => {
-      systemPrompt += `\n### 仪表盘 ${index + 1}: ${dashboard.name || '未命名仪表盘'}\n`;
+      systemPrompt += `\n### 仪表盘 ${index + 1}: ${dashboard.name || "未命名仪表盘"}\n`;
       systemPrompt += JSON.stringify(dashboard, null, 2);
       systemPrompt += "\n";
     });
@@ -102,7 +102,7 @@ function buildSystemPrompt(reportData) {
   if (reportData.map && reportData.map.length > 0) {
     systemPrompt += "\n## 地图数据\n";
     reportData.map.forEach((map, index) => {
-      systemPrompt += `\n### 地图 ${index + 1}: ${map.name || '未命名地图'}\n`;
+      systemPrompt += `\n### 地图 ${index + 1}: ${map.name || "未命名地图"}\n`;
       systemPrompt += JSON.stringify(map, null, 2);
       systemPrompt += "\n";
     });

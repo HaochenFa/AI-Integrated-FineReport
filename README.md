@@ -16,6 +16,7 @@
 2. **上下文信息增强**：支持表格、图表、交叉表、仪表盘和地图数据的提取和分析，提供更丰富的上下文信息
 3. **流式响应**：支持流式响应，提供更好的用户体验
 4. **性能监控**：内置性能监控功能，跟踪 AI 分析的性能指标
+5. **交互式聊天**：提供可拖拽、可调整大小的聊天窗口，支持 Markdown 格式显示，方便用户与 AI 助手交流
 
 ## 交互流程
 
@@ -28,25 +29,33 @@
 ## 目录结构
 
 ```plaintext
-/AIDA_Watchboard/
+/AI_FineReport_Dashboard/
 ├── src/                              # 源代码目录
 │   ├── core/                         # 核心功能模块
 │   │   ├── ai-analyzer.js            # AI分析模块
+│   │   ├── chat-manager.js           # 聊天管理模块
+│   │   ├── chat-prompt-builder.js    # 聊天提示构建模块
 │   │   ├── data-collector.js         # 数据收集模块
+│   │   ├── performance-monitor.js    # 性能监控模块
 │   │   ├── prompt-builder.js         # Prompt构建模块
 │   │   └── result-processor.js       # 结果处理模块
 │   ├── config/                       # 配置文件
-│   │   ├── api-config.example.js     # API配置模版，使用时复制到api-config.js
+│   │   ├── api-config.example.js     # API配置模版
 │   │   └── prompt-templates.js       # Prompt模板
 │   ├── ui/                           # UI相关模块
+│   │   ├── chat-styles.js            # 聊天窗口样式
+│   │   ├── chat-window.js            # 聊天窗口组件
 │   │   ├── loading-indicator.js      # 加载指示器
-│   │   └── message-box.js            # 消息框
+│   │   ├── message-box.js            # 消息框
+│   │   ├── performance-dashboard.js  # 性能监控仪表盘
+│   │   └── styles.js                 # 通用样式
 │   ├── integration/                  # 帆软报表集成模块
-│   │   └── fr-api-wrapper.exmaple.js # 帆软API封装
+│   │   ├── fr-api-wrapper.example.js # 帆软API封装
+│   │   └── fr-chat-integration.js    # 聊天功能集成
 │   └── main.js                       # 主入口文件
 ├── examples/                         # 示例代码
-│   ├── integration-example.js        # 集成示例代码
-│   └── integration-example.html      # 集成示例HTML
+│   ├── integration.example.html      # 集成示例HTML
+│   └── integration.example.js        # 集成示例代码
 ├── docs/                             # 文档
 │   ├── AI Integrated FineReport Framework.html  # 系统架构图
 │   └── development.md                # 开发指南
@@ -79,12 +88,22 @@ window.AIDA_Watchboard.init({
     temperature: 0.3,
     maxTokens: 2000,
   },
+  // 聊天功能配置
+  enableChat: true, // 是否启用聊天功能，默认为true
+  chat: {
+    // 聊天相关配置
+    // 注意：enableDefaultAnalysis选项只能在后端设置，不能从前端配置获取
+    // 默认为true，IT管理员可以通过修改main.js中的代码来更改此设置
+  },
 });
 // 为分析按钮添加点击事件
 const analysisButton = document.getElementById("ai-analysis-button");
 analysisButton.addEventListener("click", async function () {
   await window.AIDA_Watchboard.runBasicAnalysis();
 });
+
+// 显示聊天窗口
+window.AIDA_Watchboard.showChatWindow();
 ```
 
 ### 2. 流式响应特性

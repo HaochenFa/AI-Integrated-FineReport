@@ -16,7 +16,12 @@ import {
 import { showPerformanceDashboard, configureDashboard } from "./ui/performance-dashboard.js";
 
 // 导入聊天相关模块
-import { createChatWindow, showChatWindow, hideChatWindow, toggleChatWindow } from "./ui/chat-window.js";
+import {
+  createChatWindow,
+  showChatWindow,
+  hideChatWindow,
+  toggleChatWindow,
+} from "./ui/chat-window.js";
 import { initChatManager, getChatHistory, clearChatHistory } from "./core/chat-manager.js";
 import { initFRChatIntegration } from "./integration/fr-chat-integration.js";
 
@@ -193,15 +198,15 @@ function configureAPI(config) {
 function initChat(options = {}) {
   // 创建聊天窗口
   createChatWindow();
-  
+
   // 初始化聊天管理器，传递选项
   initChatManager(options);
-  
+
   // 初始化FineReport聊天集成
   if (options.enableFRIntegration !== false) {
     initFRChatIntegration(options.frIntegration || {});
   }
-  
+
   console.log("聊天功能初始化完成");
 }
 
@@ -217,16 +222,16 @@ function init(config = {}) {
 
   // 注入全局样式
   injectGlobalStyles();
-  
+
   // 初始化聊天功能
   if (config.enableChat !== false) {
     // 合并聊天选项
     const chatOptions = config.chat || {};
-    
+
     // 默认分析报告配置只能在后端设置，不从前端config获取
     // IT管理员可以在此处修改默认值
     chatOptions.enableDefaultAnalysis = true; // 默认启用，IT管理员可以在此修改
-    
+
     initChat(chatOptions);
   }
 
