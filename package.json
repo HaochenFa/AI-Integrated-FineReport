@@ -18,7 +18,7 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "lint": "eslint src",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "jest"
   },
   "keywords": [
     "finereport",
@@ -30,8 +30,11 @@
   "author": "Haochen Fa",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/preset-env": "^7.27.2",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
+    "babel-jest": "^30.0.0",
     "eslint": "^8.56.0",
     "jest": "^30.0.0",
     "jest-environment-jsdom": "^30.0.0",

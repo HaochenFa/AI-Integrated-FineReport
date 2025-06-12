@@ -7,7 +7,7 @@
 export default {
   // 基础配置
   testEnvironment: "jsdom",
-  transform: {},
+  // transform: {},
 
   // 自动收集测试覆盖率
   collectCoverage: true,
