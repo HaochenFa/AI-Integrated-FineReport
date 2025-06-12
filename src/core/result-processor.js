@@ -218,51 +218,51 @@ function processResult(result, options = {}) {
 function convertMarkdownToHTML(text) {
   if (!text) return "";
 
-  // 转换代码块
-  text = text.replace(/```([\s\S]*?)```/g, function (match, code) {
-    return `<pre><code>${code.trim()}</code></pre>`;
+  // 1. 保护和提取代码块
+  const codeBlocks = [];
+  let html = text.replace(/```([\s\S]*?)```/g, (match, code) => {
+    const placeholder = `__CODEBLOCK_${codeBlocks.length}__`;
+    codeBlocks.push(
+      `<pre><code>${code.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`
+    );
+    return placeholder;
   });
 
-  // 转换行内代码
-  text = text.replace(/`([^`]+)`/g, "<code>$1</code>");
+  // 2. 处理行级元素
+  html = html
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;") // Escape remaining HTML
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/g, "<em>$1</em>")
+    .replace(/~~(.*?)~~/g, "<del>$1</del>")
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+    .replace(/^# (.+)$/gm, "<h1>$1</h1>")
+    .replace(/^## (.+)$/gm, "<h2>$1</h2>")
+    .replace(/^### (.+)$/gm, "<h3>$1</h3>")
+    .replace(/^---$/gm, "<hr>");
 
-  // 转换Markdown标题为HTML
-  text = text.replace(/^# (.+)$/gm, "<h1>$1</h1>");
-  text = text.replace(/^## (.+)$/gm, "<h2>$1</h2>");
-  text = text.replace(/^### (.+)$/gm, "<h3>$1</h3>");
-  text = text.replace(/^#### (.+)$/gm, "<h4>$1</h4>");
-  text = text.replace(/^##### (.+)$/gm, "<h5>$1</h5>");
+  // 3. 处理列表
+  html = html.replace(/^\s*[-*] (.+)/gm, "<li>$1</li>");
+  html = html.replace(/(<li>(?:.|\n)*?<\/li>)/g, "<ul>$1</ul>").replace(/<\/ul>\n<ul>/g, "");
 
-  // 转换Markdown列表为HTML
-  text = text.replace(/^\* (.+)$/gm, "<li>$1</li>");
-  text = text.replace(/^- (.+)$/gm, "<li>$1</li>");
-  text = text.replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
+  // 4. 处理段落
+  html = html
+    .split(/\n\n+/)
+    .map((paragraph) => {
+      if (paragraph.match(/^\s*<(h[1-3]|ul|li|hr|pre|__CODEBLOCK_)/)) {
+        return paragraph;
+      }
+      return paragraph ? `<p>${paragraph.replace(/\n/g, "<br>")}</p>` : "";
+    })
+    .join("");
 
-  // 转换Markdown强调为HTML
-  text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-  text = text.replace(/\*(.+?)\*/g, "<em>$1</em>");
-  text = text.replace(/~~(.+?)~~/g, "<del>$1</del>");
-
-  // 转换链接
-  text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
-
-  // 将连续的列表项包装在ul或ol标签中
-  text = text.replace(/(<li>.+<\/li>\n*)+/g, function (match) {
-    if (match.includes("d+.")) {
-      return "<ol>" + match + "</ol>";
-    } else {
-      return "<ul>" + match + "</ul>";
-    }
+  // 5. 恢复代码块
+  codeBlocks.forEach((block, index) => {
+    html = html.replace(`__CODEBLOCK_${index}__`, block);
   });
 
-  // 转换水平线
-  text = text.replace(/^---$/gm, "<hr>");
-
-  // 转换换行符为HTML换行
-  text = text.replace(/\n\n/g, "<p></p>");
-  text = text.replace(/\n/g, "<br>");
-
-  return text;
+  return html;
 }
 
 /**
@@ -316,28 +316,22 @@ function convertResultToTable(result, format = "html") {
  */
 function formatText(text, format = "html") {
   if (!text) return "";
-
   switch (format) {
     case "html":
       return convertMarkdownToHTML(text);
     case "markdown":
-      // 保持Markdown格式，但确保格式正确
       return text.trim();
     case "text":
-      // 移除所有Markdown标记
       return text
-        .replace(/^#+\s+/gm, "") // 移除标题标记
-        .replace(/\*\*(.+?)\*\*/g, "$1") // 移除粗体
-        .replace(/\*(.+?)\*/g, "$1") // 移除斜体
-        .replace(/~~(.+?)~~/g, "$1") // 移除删除线
-        .replace(/^[\*-]\s+/gm, "• ") // 将列表项转换为简单的项目符号
-        .replace(/^\d+\.\s+/gm, "• ") // 将有序列表转换为简单的项目符号
-        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1 ($2)") // 简化链接
-        .replace(/```[\s\S]*?```/g, function (match) {
-          // 简化代码块
-          return match.replace(/```\w*\n?|```/g, "").trim();
-        })
-        .replace(/`([^`]+)`/g, "$1"); // 移除行内代码标记
+        .replace(/^#+\s+/gm, "")
+        .replace(/\*\*(.+?)\*\*/g, "$1")
+        .replace(/\*(.+?)\*/g, "$1")
+        .replace(/~~(.+?)~~/g, "$1")
+        .replace(/^[\*-]\s+/gm, "• ")
+        .replace(/^\d+\.\s+/gm, "• ")
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1 ($2)")
+        .replace(/```[\s\S]*?```/g, (match) => match.replace(/```\w*\n?|```/g, "").trim())
+        .replace(/`([^`]+)`/g, "$1");
     default:
       return text;
   }

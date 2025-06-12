@@ -17,7 +17,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [
     "finereport",
@@ -26,12 +27,14 @@
     "analytics",
     "visualization"
   ],
-  "author": "",
+  "author": "Haochen Fa",
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "eslint": "^8.56.0",
+    "jest": "^30.0.0",
+    "jest-environment-jsdom": "^30.0.0",
     "rollup": "^4.9.1"
   },
   "browserslist": [
