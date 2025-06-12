@@ -373,9 +373,33 @@ function loadPerformanceData() {
   if (typeof localStorage === "undefined") return;
 
   try {
-    const storedData = localStorage.getItem(monitorConfig.storageKey);
-    if (storedData) {
-      performanceData = JSON.parse(storedData);
+    const storedDataJSON = localStorage.getItem(monitorConfig.storageKey);
+    if (storedDataJSON) {
+      const storedData = JSON.parse(storedDataJSON);
+
+      // 安全地合并数据，而不是完全覆盖
+      // 这样可以确保即使存储的数据不完整，默认的结构依然存在
+      performanceData = {
+        ...performanceData, // 保持默认结构
+        ...storedData, // 应用存储的数据
+        // 对嵌套对象进行深度合并
+        overall: {
+          ...performanceData.overall,
+          ...(storedData.overall || {}),
+        },
+        tokenUsage: {
+          ...performanceData.tokenUsage,
+          ...(storedData.tokenUsage || {}),
+        },
+        cacheStats: {
+          ...performanceData.cacheStats,
+          ...(storedData.cacheStats || {}),
+        },
+        // 对数组和复杂对象，可以根据需要进行更精细的合并
+        // 这里为了简单起见，直接使用存储的值（如果存在）
+        modelPerformance: storedData.modelPerformance || performanceData.modelPerformance,
+        recentRequests: storedData.recentRequests || performanceData.recentRequests,
+      };
     }
   } catch (error) {
     console.error("加载持久化性能数据出错:", error);
@@ -431,4 +455,5 @@ export {
   resetPerformanceData,
   configurePerformanceMonitor,
   formatDuration,
+  estimateTokenCount,
 };
