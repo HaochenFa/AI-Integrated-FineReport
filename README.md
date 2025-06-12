@@ -41,6 +41,10 @@
 │   │   ├── performance-monitor.js    # 性能监控模块
 │   │   ├── prompt-builder.js         # Prompt构建模块
 │   │   └── result-processor.js       # 结果处理模块
+│   │   └── __tests__/                # 核心模块单元测试
+│   │       ├── performance-monitor.test.js # 性能监控模块测试
+│   │       ├── prompt-builder.test.js    # Prompt构建模块测试
+│   │       └── result-processor.test.js  # 结果处理模块测试
 │   ├── config/                       # 配置文件
 │   │   ├── api-config.example.js     # API配置模版
 │   │   └── prompt-templates.js       # Prompt模板
@@ -178,13 +182,28 @@ npm run build
 
 # 代码规范检查
 npm run lint
+
+# 运行测试
+npm test
 ```
 
 构建后的文件将输出到`dist`目录，主要包括：
 
 - `ai-integrated-fr.esm.js`：ES 模块格式的主文件
 
+## 测试
+
+项目包含针对核心模块的单元测试，以确保代码质量和功能稳定性。测试覆盖了以下主要模块：
+
+- `performance-monitor.js`: 监控 AI 分析的性能指标。
+- `prompt-builder.js`: 构建发送给 AI 模型的提示。
+- `result-processor.js`: 处理和解析 AI 模型的响应结果。
+
+运行测试请参见“安装和构建”部分的说明。
+
 ## 开发指南
+
+详细的开发指南请参见 [docs/development.md](docs/development.md)。
 
 ### 修改配置
 
