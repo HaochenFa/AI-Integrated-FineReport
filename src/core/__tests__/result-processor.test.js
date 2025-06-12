@@ -11,7 +11,7 @@ import {
   validateResult,
 } from "../result-processor.js";
 
-// --- 模拟数据 (已修复) ---
+// --- 模拟数据 ---
 const mockValidAIResponse = {
   choices: [
     {

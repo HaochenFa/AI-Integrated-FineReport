@@ -5,6 +5,7 @@
  */
 import { collectReportData } from "./core/data-collector.js";
 import { buildBasicAnalysisPrompt } from "./core/prompt-builder.js";
+import { getPromptTemplates } from "./config/prompt-templates.js";
 import { analyzeWithAI, streamAnalyzeWithAI, clearCache } from "./core/ai-analyzer.js";
 import { getFRAPIWrapper } from "./integration/fr-api-wrapper.js";
 import { showSuccessMessage, showErrorMessage } from "./ui/message-box.js";
@@ -53,7 +54,8 @@ async function runStreamAnalysis(options = {}, resultContainerId = "ai-analysis-
     }
 
     // 2. 构建分析prompt
-    const prompt = buildBasicAnalysisPrompt(reportData);
+    const templates = getPromptTemplates(); // 先获取模板
+    const prompt = buildBasicAnalysisPrompt(reportData, templates); // 再将模板注入
 
     // 获取结果容器元素
     let resultContainer;

@@ -7,6 +7,7 @@ import { addMessage } from "../ui/chat-window.js";
 import { collectReportData } from "../integration/data-collector.js";
 import { buildChatPrompt } from "./chat-prompt-builder.js";
 import { buildBasicAnalysisPrompt } from "./prompt-builder.js";
+import { getPromptTemplates } from "../config/prompt-templates.js";
 import { streamAnalyzeWithAI } from "./ai-analyzer.js";
 
 // 聊天历史记录
@@ -246,7 +247,8 @@ async function generateDefaultAnalysisReport() {
     const reportData = collectReportData();
 
     // 构建基础分析提示
-    const prompt = buildBasicAnalysisPrompt(reportData);
+    const templates = getPromptTemplates(); // 先获取模板
+    const prompt = buildBasicAnalysisPrompt(reportData, templates); // 再将模板注入
 
     // 创建一个空的助手消息占位符
     const assistantMessageElement = createAssistantMessagePlaceholder();
