@@ -4,7 +4,7 @@
  * @description 聊天管理器模块 - 管理AI对话流程和历史
  */
 import { addMessage } from "../ui/chat-window.js";
-import { collectReportData } from "../integration/data-collector.js";
+import { collectReportData } from "./data-collector.js";
 import { buildChatPrompt } from "./chat-prompt-builder.js";
 import { buildBasicAnalysisPrompt } from "./prompt-builder.js";
 import { getPromptTemplates } from "../config/prompt-templates.js";
@@ -25,13 +25,14 @@ let chatState = {
  * 初始化聊天管理器
  * @param {Object} options - 初始化选项
  */
-function initChatManager(options = {}) {
+async function initChatManager(options = {}) {
   // 监听聊天消息发送事件
   document.addEventListener("ai-chat-message-sent", handleUserMessage);
 
   // 如果启用默认分析报告，则生成并显示
   if (options.enableDefaultAnalysis !== false) {
-    generateDefaultAnalysisReport();
+    // AWAIT the async function to ensure completion
+    await generateDefaultAnalysisReport();
   } else {
     // 添加欢迎消息
     addAssistantMessage("您好！我是AI助手，可以帮您分析报表数据。请问有什么可以帮助您的？");
