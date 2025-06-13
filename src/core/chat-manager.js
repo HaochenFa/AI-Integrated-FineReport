@@ -288,4 +288,4 @@ async function generateDefaultAnalysisReport() {
   }
 }
 
-export { initChatManager, getChatHistory, clearChatHistory };
+export { initChatManager, getChatHistory, clearChatHistory, handleUserMessage };
