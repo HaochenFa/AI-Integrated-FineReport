@@ -52,7 +52,8 @@ let currentPromptTemplates = { ...defaultPromptTemplates };
  * @returns {Object} 当前prompt模板
  */
 function getPromptTemplates() {
-  return { ...currentPromptTemplates };
+  // 使用深拷贝返回一个副本，防止外部修改影响内部状态
+  return JSON.parse(JSON.stringify(currentPromptTemplates));
 }
 
 /**
@@ -60,7 +61,25 @@ function getPromptTemplates() {
  * @param {Object} newTemplates - 新的模板
  */
 function updatePromptTemplates(newTemplates) {
-  currentPromptTemplates = { ...currentPromptTemplates, ...newTemplates };
+  // 简单的深合并逻辑
+  // 遍历新模板的键
+  for (const key in newTemplates) {
+    if (
+      typeof newTemplates[key] === "object" &&
+      newTemplates[key] !== null &&
+      !Array.isArray(newTemplates[key]) &&
+      currentPromptTemplates[key]
+    ) {
+      // 如果当前模板中也存在该键且两者都是对象，则递归合并
+      currentPromptTemplates[key] = {
+        ...currentPromptTemplates[key],
+        ...newTemplates[key],
+      };
+    } else {
+      // 否则，直接替换/添加
+      currentPromptTemplates[key] = newTemplates[key];
+    }
+  }
 }
 
 /**
