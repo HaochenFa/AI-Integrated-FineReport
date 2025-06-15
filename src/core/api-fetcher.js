@@ -4,7 +4,7 @@
  * @description API 请求器模块 - 一个无依赖的、纯粹的网络通信单元。
  */
 
-export async function fetchStandard(url, apiKey, bodyPayload, timeout) {
+async function fetchStandard(url, apiKey, bodyPayload, timeout) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
@@ -32,7 +32,7 @@ export async function fetchStandard(url, apiKey, bodyPayload, timeout) {
   }
 }
 
-export async function fetchStream(url, apiKey, bodyPayload, timeout, onChunk) {
+async function fetchStream(url, apiKey, bodyPayload, timeout, onChunk) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
   let completeResponse = "";
@@ -61,10 +61,10 @@ export async function fetchStream(url, apiKey, bodyPayload, timeout, onChunk) {
     let buffer = "";
 
     while (true) {
-      const { value, done } = await reader.read();
+      const {value, done} = await reader.read();
       if (done) break;
 
-      buffer += decoder.decode(value, { stream: true });
+      buffer += decoder.decode(value, {stream: true});
       const lines = buffer.split("\n");
       buffer = lines.pop() || "";
 
@@ -91,3 +91,5 @@ export async function fetchStream(url, apiKey, bodyPayload, timeout, onChunk) {
     throw error;
   }
 }
+
+export {fetchStandard, fetchStream};

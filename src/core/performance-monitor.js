@@ -422,6 +422,7 @@ function generateRequestId() {
 function estimateTokenCount(text) {
   if (!text) return 0;
 
+  // todo)) 是否应该精细化token的计算
   // 简单估算：平均每4个字符约为1个token
   // 这只是一个粗略估计，实际token数量取决于具体的tokenizer
   return Math.ceil(text.length / 4);

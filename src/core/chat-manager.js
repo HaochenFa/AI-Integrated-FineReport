@@ -154,7 +154,7 @@ function updateAssistantMessageContent(messageElement, content) {
  * @param {HTMLElement} element - 要格式化的元素
  */
 function applyMarkdownFormatting(element) {
-  // 这里可以使用第三方Markdown库，如marked.js
+  // todo)) 这里可以使用第三方Markdown库，如marked.js
   // 简单实现：替换代码块、粗体、斜体等
   let html = element.innerHTML;
 

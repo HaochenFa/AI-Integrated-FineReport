@@ -9,9 +9,9 @@ import * as utils from "./analyzer-utils.js";
 import * as fetcher from "./api-fetcher.js";
 import * as retryHandler from "./retry-handler.js";
 import * as monitor from "./performance-monitor.js";
-import { getAPIConfig, getFallbackModels } from "../config/api-config.js";
-import { showLoadingIndicator, hideLoadingIndicator } from "../ui/loading-indicator.js";
-import { showErrorMessage } from "../ui/message-box.js";
+import {getAPIConfig, getFallbackModels} from "../config/api-config.js";
+import {showLoadingIndicator, hideLoadingIndicator} from "../ui/loading-indicator.js";
+import {showErrorMessage} from "../ui/message-box.js";
 
 // 默认请求配置
 const DEFAULT_REQUEST_CONFIG = {
@@ -49,7 +49,7 @@ let requestStatus = {
  * @returns {Object} 当前请求状态
  */
 function getRequestStatus() {
-  return { ...requestStatus };
+  return {...requestStatus};
 }
 
 /**
@@ -62,7 +62,7 @@ function getRequestStatus() {
  * @returns {Promise<object|null>} 分析结果
  */
 async function _runAnalysisCore(prompt, options, dataTimestamp, fetcherFn) {
-  const config = { ...DEFAULT_REQUEST_CONFIG, ...options };
+  const config = {...DEFAULT_REQUEST_CONFIG, ...options};
   const apiConfig = getAPIConfig();
   const fallbackModels = getFallbackModels();
 
@@ -77,6 +77,7 @@ async function _runAnalysisCore(prompt, options, dataTimestamp, fetcherFn) {
       const cachedResult = cache.getFromCache(cacheKey, config.cacheTTL);
       if (cachedResult) {
         monitor.recordCacheHit(requestId);
+        // todo)) 检查这里有没有遗漏
         // ...
         return cachedResult;
       }
@@ -166,4 +167,4 @@ async function streamAnalyzeWithAI(
   return result;
 }
 
-export { getRequestStatus, streamAnalyzeWithAI, analyzeWithAI };
+export {getRequestStatus, streamAnalyzeWithAI, analyzeWithAI};
