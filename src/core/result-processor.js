@@ -265,6 +265,7 @@ function convertMarkdownToHTML(text) {
   return html;
 }
 
+// todo)) 是否需要删除该函数
 /**
  * 将结果转换为表格格式
  * @param {Object} result - 分析结果

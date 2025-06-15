@@ -51,4 +51,4 @@ function simulateStreamFromText(text) {
   return chunks;
 }
 
-export { generateCacheKey, simulateStreamFromText };
+export {generateCacheKey, simulateStreamFromText};

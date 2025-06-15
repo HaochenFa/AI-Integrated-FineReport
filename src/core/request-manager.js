@@ -11,6 +11,7 @@ let requestQueue = [];
 let isProcessingQueue = false;
 let activeRequests = 0;
 
+// todo)) 具体最大并发请求需要部署后测试
 const DEFAULT_CONCURRENT_LIMIT = 2; // 默认最大并发请求数
 
 /**

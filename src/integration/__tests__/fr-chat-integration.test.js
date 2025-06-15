@@ -4,6 +4,8 @@
  * @description fr-chat-integration.js 模块的单元测试
  */
 
+// todo)) 未通过的测试
+
 import { jest } from "@jest/globals";
 
 // Mock dependencies
